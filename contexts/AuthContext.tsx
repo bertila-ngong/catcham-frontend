@@ -40,9 +40,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: '15031892330-abcdefghijklmnop.apps.googleusercontent.com',
-    iosClientId: '15031892330-abcdefghijklmnop.apps.googleusercontent.com',
-    webClientId: '15031892330-abcdefghijklmnop.apps.googleusercontent.com',
+    // TODO: Replace with your actual OAuth client IDs from Google Cloud Console
+    // 1. Go to Google Cloud Console: https://console.cloud.google.com/
+    // 2. Select your project
+    // 3. Go to "APIs & Services" > "Credentials"
+    // 4. Create OAuth 2.0 Client IDs for Android, iOS, and Web
+    // 5. Replace these placeholder IDs below
+    androidClientId: 'YOUR_ANDROID_CLIENT_ID_FROM_GOOGLE_CLOUD_CONSOLE',
+    iosClientId: 'YOUR_IOS_CLIENT_ID_FROM_GOOGLE_CLOUD_CONSOLE',
+    webClientId: 'YOUR_WEB_CLIENT_ID_FROM_GOOGLE_CLOUD_CONSOLE',
   });
 
   useEffect(() => {
