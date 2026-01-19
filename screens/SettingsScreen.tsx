@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAuth } from '../contexts/AuthContext';
 import { UserSettings } from '../types';
 
 const DEFAULT_SETTINGS: UserSettings = {
@@ -26,6 +27,7 @@ const DEFAULT_SETTINGS: UserSettings = {
 export default function SettingsScreen() {
   const [settings, setSettings] = useState<UserSettings>(DEFAULT_SETTINGS);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const { logout, user } = useAuth();
 
   useEffect(() => {
     loadSettings();
@@ -174,6 +176,36 @@ export default function SettingsScreen() {
               thumbColor={notificationsEnabled ? '#3B82F6' : '#F3F4F6'}
             />
           </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Account</Text>
+          <TouchableOpacity
+            style={styles.logoutButton}
+            onPress={() => {
+              RNAlert.alert(
+                'Logout',
+                'Are you sure you want to logout?',
+                [
+                  { text: 'Cancel', style: 'cancel' },
+                  {
+                    text: 'Logout',
+                    style: 'destructive',
+                    onPress: async () => {
+                      try {
+                        await logout();
+                      } catch (error) {
+                        RNAlert.alert('Error', 'Failed to logout. Please try again.');
+                      }
+                    },
+                  },
+                ]
+              );
+            }}
+          >
+            <Ionicons name="log-out-outline" size={24} color="#DC2626" />
+            <Text style={styles.logoutButtonText}>Logout</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.section}>
@@ -330,6 +362,28 @@ const styles = StyleSheet.create({
     color: '#64748B',
     marginTop: 6,
     fontWeight: '600',
+  },
+  logoutButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 20,
+    borderWidth: 2,
+    borderColor: '#FEE2E2',
+    shadowColor: '#DC2626',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  logoutButtonText: {
+    fontSize: 17,
+    fontWeight: '700',
+    color: '#DC2626',
+    marginLeft: 12,
+    letterSpacing: 0.3,
   },
   appDescription: {
     fontSize: 15,
