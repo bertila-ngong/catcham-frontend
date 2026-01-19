@@ -55,6 +55,18 @@ export default function SettingsScreen() {
     }
   };
 
+  const handleLogout = async () => {
+    console.log('Logout button pressed directly');
+    try {
+      console.log('Calling logout function');
+      await logout();
+      console.log('Logout completed successfully');
+    } catch (error) {
+      console.log('Logout error:', error);
+      RNAlert.alert('Error', 'Failed to logout. Please try again.');
+    }
+  };
+
   const businessTypes = [
     { value: 'home', label: 'Home Security', icon: 'home-outline' },
     { value: 'office', label: 'Office', icon: 'business-outline' },
@@ -182,26 +194,7 @@ export default function SettingsScreen() {
           <Text style={styles.sectionTitle}>Account</Text>
           <TouchableOpacity
             style={styles.logoutButton}
-            onPress={() => {
-              RNAlert.alert(
-                'Logout',
-                'Are you sure you want to logout?',
-                [
-                  { text: 'Cancel', style: 'cancel' },
-                  {
-                    text: 'Logout',
-                    style: 'destructive',
-                    onPress: async () => {
-                      try {
-                        await logout();
-                      } catch (error) {
-                        RNAlert.alert('Error', 'Failed to logout. Please try again.');
-                      }
-                    },
-                  },
-                ]
-              );
-            }}
+            onPress={handleLogout}
           >
             <Ionicons name="log-out-outline" size={24} color="#DC2626" />
             <Text style={styles.logoutButtonText}>Logout</Text>
