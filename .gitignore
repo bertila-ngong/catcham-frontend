@@ -17,7 +17,9 @@ expo-env.d.ts
 *.p12
 *.key
 *.mobileprovision
-
+.firebase.config.ts
+firebase.config.ts
+/firebase.config.ts
 # Metro
 .metro-health-check*
 
